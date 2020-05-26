@@ -45,4 +45,26 @@ public class MathCalculations
             (Distance(new Coords(0, 0, 0), vector1) * Distance(new Coords(0, 0, 0), vector2));
         return Mathf.Acos(dotDivide); //it return radians. for degrees * 180/Mathf.PI
     }
+
+    static public Coords Rotate(Coords vector, float angle, bool clockwise) //in radians
+    {
+        if (clockwise)
+        {
+            angle = 2 * Mathf.PI - angle;
+        }
+
+        float Xvalue = vector.x * Mathf.Cos(angle) - vector.y * Mathf.Sin(angle);
+        float Yvalue = vector.x * Mathf.Sin(angle) + vector.y * Mathf.Cos(angle);
+        return new Coords(Xvalue, Yvalue,0);
+    }
+
+    static public Coords CrossProduct(Coords vector1, Coords vector2) 
+    {
+        // v x w = (v.y * w.z - v.z *w.y, v.z * w.x - v.x * w.z, v.x * w.y - v.y * w.x);
+        float Xmultiply = vector1.y * vector2.z - vector1.z * vector2.y;
+        float Ymultiply = vector1.z * vector2.x - vector1.x * vector2.z;
+        float Zmultiply = vector1.x * vector2.y - vector1.y * vector2.x;
+        Coords crossProduct = new Coords(Xmultiply, Ymultiply, Zmultiply);
+        return crossProduct;
+    }
 }

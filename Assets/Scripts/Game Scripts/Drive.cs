@@ -20,7 +20,17 @@ public class Drive : MonoBehaviour
         Coords dirNormal = MathCalculations.GetNormal(new Coords(direction));
         direction = dirNormal.ToVector();
 
-        float angle = MathCalculations.Angle(new Coords(0, 1, 0), new Coords(direction)) * 180.0f/Mathf.PI;
+        // float angle = MathCalculations.Angle(new Coords(0, 1, 0), new Coords(direction)) * 180.0f/Mathf.PI; //degrees
+        float angle = MathCalculations.Angle(new Coords(this.transform.up), new Coords(direction));
+        bool clockwise = false;
+        if (MathCalculations.CrossProduct(new Coords(this.transform.up), dirNormal).z < 0)
+        {
+            clockwise = true;
+        }
+
+        Coords newDirection = MathCalculations.Rotate(new Coords(0, 1, 0), angle, clockwise);
+        this.transform.up = new Vector3(newDirection.x, newDirection.y, newDirection.z);
+
         Debug.Log("Angle to fuel = " + angle);
 
         //float angle1 = MathCalculations.Angle(new Coords(0, -2, 0), new Coords(-1, 2, 0)) * 180.0f / Mathf.PI;
