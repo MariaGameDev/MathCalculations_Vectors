@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public Text tankPosition;
     public Text fuelPosition;
     public Text energyAmount;
+    public Text angle;
 
     public void AddEnergy(string amount)
     {
@@ -20,6 +21,17 @@ public class UIManager : MonoBehaviour
             energyAmount.text = amount;
         }
         
+    }
+
+    public void SetAngle(string amount)
+    {
+        float number;
+        if (float.TryParse(amount, out number))
+        {
+            // number *= Mathf.PI / 180.0f;
+            number *= Mathf.Rad2Deg;
+            tank.transform.up = MathCalculations.Rotate(new Coords(tank.transform.up), number, false).ToVector();
+        }
     }
 
     void Start()
